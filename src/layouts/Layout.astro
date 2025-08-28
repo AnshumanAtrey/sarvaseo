@@ -1,4 +1,7 @@
 ---
+// Import global styles
+import '../style/global.css';
+
 export interface Props {
 	title?: string;
 	description?: string;
@@ -117,18 +120,13 @@ const { title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva
 		<link rel="preload" href="https://fonts.gstatic.com/s/geist/v1/gyB4hws1JdgnKy56GB_JX6zdZ_2TE2c.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="https://fonts.gstatic.com/s/instrumentserif/v1/jizGREVItHgc8qDIbSTKq4XkRiUa2zcZiVaJ.woff2" as="font" type="font/woff2" crossorigin>
 		
-		<!-- Global Styles -->
-		<link rel="stylesheet" href="/src/style/global.css">
+
 	</head>
 	<body class="font-geist text-gray-900 antialiased min-h-screen">
 		
 		<slot />
 		
-		<!-- Performance Optimizations -->
-		<script src="/src/scripts/performance.js"></script>
-		
-		<!-- Error Handling -->
-		<script src="/src/scripts/errorHandler.js"></script>
+
 	</body>
 </html>
 
