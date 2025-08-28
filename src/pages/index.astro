@@ -1,11 +1,43 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Module from '../components/Module.astro';
+import Footer from '../components/Footer.astro';
+import { seoModules } from '../data/seoModules';
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+  title="Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva SEO" 
+  description="Free comprehensive SEO checklist with 47+ actionable steps. Learn how to improve SEO rankings with AI tools, keyword research, technical SEO, and proven strategies. Start ranking higher today!"
+>
+  <!-- Hero Section -->
+  <Hero />
+  
+
+  
+  <!-- Main Content -->
+  <main id="main-content" class="min-h-screen" role="main">
+    <!-- Modules Section -->
+    <section id="modules-section" class="max-w-3xl mx-auto px-6" aria-labelledby="checklist-heading">
+      <!-- SEO Modules -->
+      <div class="space-y-8">
+        {seoModules.map((module) => (
+          <Module 
+            module={module}
+          />
+        ))}
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <Footer />
 </Layout>
+
+<style>
+  /* Global page styles */
+  main {
+    scroll-margin-top: 2rem;
+  }
+</style>
