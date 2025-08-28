@@ -1,13 +1,16 @@
 ---
 // Import global styles
-import '../style/global.css';
+import "../style/global.css";
 
 export interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva SEO", description = "Free comprehensive SEO checklist with 47+ actionable steps. Learn how to improve SEO rankings with AI tools, keyword research, technical SEO, and proven strategies. Start ranking higher today!" } = Astro.props;
+const {
+	title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva SEO",
+	description = "Free comprehensive SEO checklist with 47+ actionable steps. Learn how to improve SEO rankings with AI tools, keyword research, technical SEO, and proven strategies. Start ranking higher today!",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -17,16 +20,26 @@ const { title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		
+
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="keywords" content="free SEO checklist, AI SEO, how to improve SEO, SEO guide 2025, search engine optimization, keyword research, technical SEO, SEO tools, SEO ranking factors, website optimization, SEO audit, local SEO, content SEO, link building, page speed optimization, mobile SEO, SEO best practices, organic traffic, SERP ranking, Google SEO, SEO strategy" />
+		<meta
+			name="keywords"
+			content="free SEO checklist, AI SEO, how to improve SEO, SEO guide 2025, search engine optimization, keyword research, technical SEO, SEO tools, SEO ranking factors, website optimization, SEO audit, local SEO, content SEO, link building, page speed optimization, mobile SEO, SEO best practices, organic traffic, SERP ranking, Google SEO, SEO strategy"
+		/>
 		<meta name="author" content="Sarva SEO - Built by atrey.dev" />
-		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		<meta
+			name="robots"
+			content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+		/>
 		<meta name="googlebot" content="index, follow" />
+		<meta
+			name="google-site-verification"
+			content="vfl_Z9jHpXJBVtYEGNKNsxdFq_9HMWyKZNYF8ZuH4WE"
+		/>
 		<link rel="canonical" href="https://sarvaseo.com/" />
-		
+
 		<!-- Open Graph Meta Tags -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
@@ -34,12 +47,12 @@ const { title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva
 		<meta property="og:url" content="https://sarvaseo.com/" />
 		<meta property="og:site_name" content="Sarva SEO" />
 		<meta property="og:locale" content="en_US" />
-		
+
 		<!-- Twitter Card Meta Tags -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		
+
 		<!-- Additional SEO Meta Tags -->
 		<meta name="theme-color" content="#EAB308" />
 		<meta name="msapplication-TileColor" content="#EAB308" />
@@ -47,86 +60,96 @@ const { title = "Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva
 		<meta name="apple-mobile-web-app-title" content="Sarva SEO" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-		
+
 		<!-- Schema.org JSON-LD -->
 		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "WebSite",
-			"name": "Sarva SEO",
-			"description": "Free comprehensive SEO checklist and guide with AI-powered tools for improving search engine rankings",
-			"url": "https://sarvaseo.com/",
-			"author": {
-				"@type": "Person",
-				"name": "Atrey",
-				"url": "https://atrey.dev"
-			},
-			"publisher": {
-				"@type": "Organization",
+			{
+				"@context": "https://schema.org",
+				"@type": "WebSite",
 				"name": "Sarva SEO",
-				"url": "https://sarvaseo.com/"
-			},
-			"potentialAction": {
-				"@type": "SearchAction",
-				"target": "https://sarvaseo.com/?q={search_term_string}",
-				"query-input": "required name=search_term_string"
-			},
-			"mainEntity": {
-				"@type": "HowTo",
-				"name": "Complete SEO Checklist Guide",
-				"description": "Step-by-step guide to improve your website's SEO rankings with proven strategies and AI tools",
-				"totalTime": "PT2H",
-				"supply": [
-					{
-						"@type": "HowToSupply",
-						"name": "Website"
-					},
-					{
-						"@type": "HowToSupply", 
-						"name": "Google Search Console"
-					},
-					{
-						"@type": "HowToSupply",
-						"name": "SEO Tools (Ahrefs, SEMrush)"
-					}
-				],
-				"step": [
-					{
-						"@type": "HowToStep",
-						"name": "Foundation Setup",
-						"text": "Set up Google Business Profile, Search Console, and basic technical SEO foundations"
-					},
-					{
-						"@type": "HowToStep", 
-						"name": "Content Strategy",
-						"text": "Perform keyword research, create SEO-optimized content, and build topical authority"
-					},
-					{
-						"@type": "HowToStep",
-						"name": "Technical Optimization", 
-						"text": "Optimize page speed, mobile responsiveness, and Core Web Vitals"
-					}
-				]
+				"description": "Free comprehensive SEO checklist and guide with AI-powered tools for improving search engine rankings",
+				"url": "https://sarvaseo.com/",
+				"author": {
+					"@type": "Person",
+					"name": "Atrey",
+					"url": "https://atrey.dev"
+				},
+				"publisher": {
+					"@type": "Organization",
+					"name": "Sarva SEO",
+					"url": "https://sarvaseo.com/"
+				},
+				"potentialAction": {
+					"@type": "SearchAction",
+					"target": "https://sarvaseo.com/?q={search_term_string}",
+					"query-input": "required name=search_term_string"
+				},
+				"mainEntity": {
+					"@type": "HowTo",
+					"name": "Complete SEO Checklist Guide",
+					"description": "Step-by-step guide to improve your website's SEO rankings with proven strategies and AI tools",
+					"totalTime": "PT2H",
+					"supply": [
+						{
+							"@type": "HowToSupply",
+							"name": "Website"
+						},
+						{
+							"@type": "HowToSupply",
+							"name": "Google Search Console"
+						},
+						{
+							"@type": "HowToSupply",
+							"name": "SEO Tools (Ahrefs, SEMrush)"
+						}
+					],
+					"step": [
+						{
+							"@type": "HowToStep",
+							"name": "Foundation Setup",
+							"text": "Set up Google Business Profile, Search Console, and basic technical SEO foundations"
+						},
+						{
+							"@type": "HowToStep",
+							"name": "Content Strategy",
+							"text": "Perform keyword research, create SEO-optimized content, and build topical authority"
+						},
+						{
+							"@type": "HowToStep",
+							"name": "Technical Optimization",
+							"text": "Optimize page speed, mobile responsiveness, and Core Web Vitals"
+						}
+					]
+				}
 			}
-		}
 		</script>
-		
-		<!-- Google Fonts Preconnect and Optimized Loading -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:wght@400&display=swap" rel="stylesheet">
-		
-		<!-- Preload critical fonts -->
-		<link rel="preload" href="https://fonts.gstatic.com/s/geist/v1/gyB4hws1JdgnKy56GB_JX6zdZ_2TE2c.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="preload" href="https://fonts.gstatic.com/s/instrumentserif/v1/jizGREVItHgc8qDIbSTKq4XkRiUa2zcZiVaJ.woff2" as="font" type="font/woff2" crossorigin>
-		
 
+		<!-- Google Fonts Preconnect and Optimized Loading -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:wght@400&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Preload critical fonts -->
+		<link
+			rel="preload"
+			href="https://fonts.gstatic.com/s/geist/v1/gyB4hws1JdgnKy56GB_JX6zdZ_2TE2c.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="https://fonts.gstatic.com/s/instrumentserif/v1/jizGREVItHgc8qDIbSTKq4XkRiUa2zcZiVaJ.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 	</head>
 	<body class="font-geist text-gray-900 antialiased min-h-screen">
-		
 		<slot />
-		
-
 	</body>
 </html>
 
