@@ -115,7 +115,7 @@ const {
 			/* Hero Section - LCP Critical Path */
 			.hero-section{position:relative;height:50vh;display:flex;align-items:center;justify-content:center;contain:layout style paint;will-change:auto}
 			.hero-title{font-size:1.5rem;line-height:1.25;color:#111827;margin:0 auto 0.75rem;font-weight:400;max-width:56rem;text-rendering:optimizeSpeed}
-			.hero-subtitle{font-size:0.875rem;line-height:1.25rem;color:#4b5563;max-width:28rem;margin:0 auto 1.5rem;font-weight:400}
+			.hero-subtitle{font-size:0.875rem;line-height:1.25rem;color:#4b5563;max-width:28rem;margin:0 auto 1.5rem;font-weight:400;contain:layout style;will-change:auto}
 			.hero-keywords{font-size:0.75rem;line-height:1rem;color:#6b7280;max-width:36rem;margin:0 auto;content-visibility:auto;contain-intrinsic-size:0 100px}
 			
 			/* Layout Utilities - Minimal */
@@ -130,25 +130,23 @@ const {
 			
 			/* Performance Optimizations */
 			.space-y-8>:not([hidden])~:not([hidden]){margin-top:2rem}.hidden{display:none}
+			
+			/* Layout containment for performance */
+			main{contain:layout style}
+			.group{contain:layout style}
 		</style>
 
 		<!-- Critical Resource Hints - Optimized -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		
-		<!-- Optimized Font Loading - Reduced Weight -->
+		<!-- Optimized Font Loading - Prevent Layout Shift -->
 		<link
 			href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
-			rel="preload"
-			as="style"
-			onload="this.onload=null;this.rel='stylesheet'"
+			rel="stylesheet"
 		/>
-		<noscript>
-			<link
-				href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
-				rel="stylesheet"
-			/>
-		</noscript>
+		<link rel="preload" href="https://fonts.gstatic.com/s/geist/v1/gyBhhwUxI-K4-9s-DgqjPHNm.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://fonts.gstatic.com/s/instrumentserif/v4/jizBRFtNs2P-hK546B9-QUJyTSL0RCQ.woff2" as="font" type="font/woff2" crossorigin>
 
 		<!-- Ultra-Minimal Performance Script -->
 		<script is:inline>

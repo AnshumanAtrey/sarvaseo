@@ -81,9 +81,12 @@ const { module } = Astro.props;
         const expanded = htmlToggle.getAttribute("aria-expanded") === "true";
 
         if (content && chevron) {
-          content.classList.toggle("hidden", expanded);
-          chevron.style.transform = expanded ? "" : "rotate(180deg)";
-          htmlToggle.setAttribute("aria-expanded", (!expanded).toString());
+          // Batch DOM updates to prevent forced reflow
+          requestAnimationFrame(() => {
+            content.classList.toggle("hidden", expanded);
+            chevron.style.transform = expanded ? "" : "rotate(180deg)";
+            htmlToggle.setAttribute("aria-expanded", (!expanded).toString());
+          });
         }
       };
     });

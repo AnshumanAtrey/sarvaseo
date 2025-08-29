@@ -98,10 +98,12 @@ const stepId = `${moduleId}-${step.id}`;
           `[data-step-chevron="${htmlToggle.dataset.stepToggle}"]`,
         ) as HTMLElement;
         if (content && chevron) {
-          content.classList.toggle("hidden");
-          chevron.style.transform = content.classList.contains("hidden")
-            ? ""
-            : "rotate(180deg)";
+          // Batch DOM updates to prevent forced reflow
+          requestAnimationFrame(() => {
+            const isHidden = content.classList.contains("hidden");
+            content.classList.toggle("hidden");
+            chevron.style.transform = isHidden ? "rotate(180deg)" : "";
+          });
         }
       };
     });
