@@ -1,16 +1,21 @@
 {
-  "name": "",
+  "name": "sarva-seo",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
+    "build:prod": "NODE_ENV=production astro build && node compress.js",
+    "compress": "node compress.js",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.4",
     "tailwindcss": "^4.1.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "terser": "^5.43.1"
   }
 }

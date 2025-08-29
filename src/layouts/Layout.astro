@@ -53,16 +53,14 @@ const {
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 
-		<!-- Additional SEO Meta Tags -->
+		<!-- SEO-Critical Meta Tags -->
 		<meta name="theme-color" content="#EAB308" />
-		<meta name="msapplication-TileColor" content="#EAB308" />
 		<meta name="application-name" content="Sarva SEO" />
 		<meta name="apple-mobile-web-app-title" content="Sarva SEO" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="mobile-web-app-capable" content="yes" />
 
-		<!-- Schema.org JSON-LD -->
-		<script type="application/ld+json">
+		<!-- SEO-Critical Schema.org JSON-LD -->
+		<script type="application/ld+json" is:inline>
 			{
 				"@context": "https://schema.org",
 				"@type": "WebSite",
@@ -79,30 +77,11 @@ const {
 					"name": "Sarva SEO",
 					"url": "https://sarvaseo.com/"
 				},
-				"potentialAction": {
-					"@type": "SearchAction",
-					"target": "https://sarvaseo.com/?q={search_term_string}",
-					"query-input": "required name=search_term_string"
-				},
 				"mainEntity": {
 					"@type": "HowTo",
 					"name": "Complete SEO Checklist Guide",
 					"description": "Step-by-step guide to improve your website's SEO rankings with proven strategies and AI tools",
 					"totalTime": "PT2H",
-					"supply": [
-						{
-							"@type": "HowToSupply",
-							"name": "Website"
-						},
-						{
-							"@type": "HowToSupply",
-							"name": "Google Search Console"
-						},
-						{
-							"@type": "HowToSupply",
-							"name": "SEO Tools (Ahrefs, SEMrush)"
-						}
-					],
 					"step": [
 						{
 							"@type": "HowToStep",
@@ -111,7 +90,7 @@ const {
 						},
 						{
 							"@type": "HowToStep",
-							"name": "Content Strategy",
+							"name": "Content Strategy", 
 							"text": "Perform keyword research, create SEO-optimized content, and build topical authority"
 						},
 						{
@@ -124,28 +103,82 @@ const {
 			}
 		</script>
 
-		<!-- Google Fonts Preconnect and Optimized Loading -->
+		<!-- Critical CSS Inline - Ultra-Optimized for LCP -->
+		<style is:inline>
+			/* Critical Reset & Base - Minimal */
+			*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#fff;color:#111827;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+			
+			/* Font Loading Optimization */
+			.font-geist{font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-weight:400;letter-spacing:-0.01em;font-display:swap}
+			.font-instrument-serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400;letter-spacing:-0.02em;font-display:swap}
+			
+			/* Hero Section - LCP Critical Path */
+			.hero-section{position:relative;height:50vh;display:flex;align-items:center;justify-content:center;contain:layout style paint;will-change:auto}
+			.hero-title{font-size:1.5rem;line-height:1.25;color:#111827;margin:0 auto 0.75rem;font-weight:400;max-width:56rem;text-rendering:optimizeSpeed}
+			.hero-subtitle{font-size:0.875rem;line-height:1.25rem;color:#4b5563;max-width:28rem;margin:0 auto 1.5rem;font-weight:400}
+			.hero-keywords{font-size:0.75rem;line-height:1rem;color:#6b7280;max-width:36rem;margin:0 auto;content-visibility:auto;contain-intrinsic-size:0 100px}
+			
+			/* Layout Utilities - Minimal */
+			.text-center{text-align:center}.flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}.relative{position:relative}.max-w-4xl{max-width:56rem}.max-w-xl{max-width:36rem}.mx-auto{margin-left:auto;margin-right:auto}.px-4{padding-left:1rem;padding-right:1rem}.max-w-2xl{max-width:28rem}.max-w-3xl{max-width:48rem}
+			
+			/* Typography - Essential Only */
+			.text-2xl{font-size:1.5rem;line-height:2rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-gray-900{color:#111827}.text-gray-600{color:#4b5563}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.leading-tight{line-height:1.25}.font-normal{font-weight:400}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.min-h-screen{min-height:100vh}
+			
+			/* Responsive - Mobile First */
+			@media (min-width:640px){.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:mb-4{margin-bottom:1rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}}
+			@media (min-width:768px){.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}
+			
+			/* Performance Optimizations */
+			.space-y-8>:not([hidden])~:not([hidden]){margin-top:2rem}.hidden{display:none}
+		</style>
+
+		<!-- Critical Resource Hints - Optimized -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		
+		<!-- Optimized Font Loading - Reduced Weight -->
 		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:wght@400&display=swap"
-			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
+			rel="preload"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
 		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
 
-		<!-- Preload critical fonts -->
-		<link
-			rel="preload"
-			href="https://fonts.gstatic.com/s/geist/v1/gyB4hws1JdgnKy56GB_JX6zdZ_2TE2c.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
+		<!-- Ultra-Minimal Performance Script -->
+		<script is:inline>
+			// Essential LCP tracking only
+			addEventListener('load', () => {
+				if ('PerformanceObserver' in window) {
+					try {
+						new PerformanceObserver((list) => {
+							const entries = list.getEntries();
+							if (entries.length && typeof gtag !== 'undefined') {
+								gtag('event', 'LCP', {
+									value: Math.round(entries[entries.length - 1].startTime),
+									event_category: 'Performance'
+								});
+							}
+						}).observe({ type: 'largest-contentful-paint', buffered: true });
+					} catch (e) {}
+				}
+			});
+		</script>
+
+		<!-- Valid Security Meta Tags -->
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:;"
 		/>
-		<link
-			rel="preload"
-			href="https://fonts.gstatic.com/s/instrumentserif/v1/jizGREVItHgc8qDIbSTKq4XkRiUa2zcZiVaJ.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
+		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+		<meta
+			http-equiv="Referrer-Policy"
+			content="strict-origin-when-cross-origin"
 		/>
 	</head>
 	<body class="font-geist text-gray-900 antialiased min-h-screen">

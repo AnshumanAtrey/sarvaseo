@@ -1,99 +1,36 @@
 @import "tailwindcss";
 
-/* Custom Font Classes */
+/* Optimized Font Classes */
 .font-geist {
-  font-family: "Geist", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 400;
   letter-spacing: -0.01em;
+  font-display: swap;
 }
 
 .font-instrument-serif {
-  font-family: "Instrument Serif", serif;
+  font-family: "Instrument Serif", Georgia, serif;
   font-weight: 400;
-  font-style: normal;
   letter-spacing: -0.02em;
+  font-display: swap;
 }
 
-.font-instrument-serif-italic {
-  font-family: "Instrument Serif", serif;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: -0.02em;
-}
-
-/* Smooth scrolling for the entire page */
+/* Essential styles only */
 html {
   scroll-behavior: smooth;
 }
 
-/* Accessibility improvements - only for form elements */
-input:focus,
-textarea:focus,
-select:focus {
+/* Accessibility - Essential only */
+input:focus, textarea:focus, select:focus {
   outline: 2px solid #FCD34D;
   outline-offset: 2px;
 }
 
-/* Remove focus outline for custom interactive elements */
 [role="button"]:focus {
   outline: none !important;
 }
 
-/* Skip link for screen readers */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: #000;
-  color: #fff;
-  padding: 8px;
-  text-decoration: none;
-  border-radius: 4px;
-  z-index: 1000;
-}
-
-.skip-link:focus {
-  top: 6px;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .bg-yellow-300 {
-    background-color: #000 !important;
-    color: #fff !important;
-  }
-  
-  .text-gray-600 {
-    color: #000 !important;
-  }
-  
-  .border-gray-200 {
-    border-color: #000 !important;
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Focus visible for better keyboard navigation */
-.focus-visible:focus {
-  outline: 2px solid #FCD34D;
-  outline-offset: 2px;
-}
-
-/* Screen reader only text */
+/* Screen reader support */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -106,67 +43,24 @@ select:focus {
   border: 0;
 }
 
-/* Custom animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
+  html {
+    scroll-behavior: auto;
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-pulse-slow {
-  animation: pulse 2s infinite;
-}
-
-/* Smooth hover effects */
-.hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Loading states */
-.loading {
-  position: relative;
-  overflow: hidden;
-}
-
-.loading::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    left: -100%;
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .bg-yellow-300 {
+    background-color: #000 !important;
+    color: #fff !important;
   }
-  100% {
-    left: 100%;
+  .text-gray-600 {
+    color: #000 !important;
   }
 }

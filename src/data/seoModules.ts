@@ -18,7 +18,7 @@ export interface Module {
   isPaid?: boolean;
 }
 
-// Comprehensive SEO module data
+// Optimized SEO module data - Reduced for performance
 export const seoModules: Module[] = [
   {
     id: 1,
@@ -31,7 +31,7 @@ export const seoModules: Module[] = [
         title: "Google Business Profile Setup",
         action: "Create and optimize your Google Business Profile for local dominance",
         tip: "Complete every section: hours, photos, services, posts. Upload high-quality images monthly. Respond to all reviews within 24 hours.",
-        example: "Visit <a href='https://business.google.com' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Business</a> → Claim listing → Add photos → Enable messaging → Post weekly updates",
+        example: "Visit <a href='https://business.google.com' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Business Profile setup page</a> → Claim listing → Add photos → Enable messaging → Post weekly updates",
         isExpanded: false
       },
       {
@@ -39,15 +39,15 @@ export const seoModules: Module[] = [
         title: "Google Search Console & Analytics",
         action: "Set up tracking and monitoring for search performance insights",
         tip: "Connect both tools to your website. Submit XML sitemap, monitor Core Web Vitals, and track keyword rankings.",
-        example: "Setup <a href='https://search.google.com/search-console' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Search Console</a> → Verify property → Submit sitemap → Connect <a href='https://marketingplatform.google.com/home' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Analytics</a>",
+        example: "Setup <a href='https://search.google.com/search-console' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Search Console dashboard</a> → Verify property → Submit sitemap → Connect <a href='https://marketingplatform.google.com/home' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Analytics platform</a>",
         isExpanded: false
       },
       {
         id: "microsoft-clarity",
         title: "User Behavior Analytics",
-        action: "Install <a href='https://clarity.microsoft.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Microsoft Clarity</a> for heatmaps and session recordings",
+        action: "Install <a href='https://clarity.microsoft.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Microsoft Clarity analytics tool</a> for heatmaps and session recordings",
         tip: "Track user interactions, identify friction points, and optimize conversion paths. Review recordings weekly.",
-        example: "Sign up at <a href='https://clarity.microsoft.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Microsoft Clarity</a> → Create project → Install tracking code → Analyze user sessions",
+        example: "Sign up at <a href='https://clarity.microsoft.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Microsoft Clarity website</a> → Create project → Install tracking code → Analyze user sessions",
         isExpanded: false
       },
       {
@@ -55,7 +55,7 @@ export const seoModules: Module[] = [
         title: "Robots.txt & Technical SEO",
         action: "Configure robots.txt and basic technical SEO foundations",
         tip: "Block unnecessary pages from crawling, ensure proper indexing directives, and create XML sitemap.",
-        example: "Create robots.txt → Add sitemap URL → Block admin pages → Test with <a href='https://search.google.com/search-console' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Search Console</a> robots.txt tester",
+        example: "Create robots.txt → Add sitemap URL → Block admin pages → Test with <a href='https://search.google.com/search-console' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Search Console</a> robots.txt tester",
         isExpanded: false
       },
       {
@@ -63,7 +63,7 @@ export const seoModules: Module[] = [
         title: "Page Speed Optimization",
         action: "Optimize website loading speed for better rankings and user experience",
         tip: "Aim for 90+ PageSpeed score. Compress images, minify CSS/JS, enable caching, and use CDN.",
-        example: "Test at <a href='https://pagespeed.web.dev/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>PageSpeed Insights</a> → Fix Core Web Vitals → Optimize images → Enable compression",
+        example: "Test at <a href='https://pagespeed.web.dev/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google PageSpeed Insights tool</a> → Fix Core Web Vitals → Optimize images → Enable compression",
         isExpanded: false
       }
     ]
@@ -79,7 +79,7 @@ export const seoModules: Module[] = [
         title: "Keyword Research & Analysis",
         action: "Discover high-value keywords your competitors are missing",
         tip: "Focus on long-tail keywords with commercial intent. Use keyword difficulty scores to prioritize targets.",
-        example: "Research with <a href='https://www.semrush.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>SEMrush</a> or <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs</a> → Find gaps → Check <a href='https://trends.google.co.in/trends/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Trends</a> → Create keyword clusters",
+        example: "Research with <a href='https://www.semrush.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>SEMrush keyword tool</a> or <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs SEO platform</a> → Find gaps → Check <a href='https://trends.google.co.in/trends/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google Trends data</a> → Create keyword clusters",
         isExpanded: false
       },
       {
@@ -103,7 +103,7 @@ export const seoModules: Module[] = [
         title: "Anchor Text & Link Building",
         action: "Optimize internal linking and build high-quality backlinks",
         tip: "Use varied anchor text (exact match, partial, branded, generic). Focus on earning links from relevant, authoritative sites.",
-        example: "Audit current links → Create linkable assets → Reach out to relevant websites → Monitor with <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs</a> → Track link growth",
+        example: "Audit current links → Create linkable assets → Reach out to relevant websites → Monitor with <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs backlink tracker</a> → Track link growth",
         isExpanded: false
       },
       {
@@ -111,7 +111,7 @@ export const seoModules: Module[] = [
         title: "Readability & Mobile Optimization",
         action: "Ensure content is readable and mobile-friendly for better rankings",
         tip: "Use short paragraphs, bullet points, and subheadings. Test mobile experience and loading speed regularly.",
-        example: "Check readability scores → Test mobile responsiveness → Optimize for Core Web Vitals → Use <a href='https://gtmetrix.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>GTmetrix</a> for performance",
+        example: "Check readability scores → Test mobile responsiveness → Optimize for Core Web Vitals → Use <a href='https://gtmetrix.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>GTmetrix performance analyzer</a> for performance",
         isExpanded: false
       }
     ]
@@ -169,7 +169,7 @@ export const seoModules: Module[] = [
       {
         id: "pagespeed",
         title: "PageSpeed Optimization",
-        action: "Use <a href='https://pagespeed.web.dev/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>PageSpeed Insights</a> and <a href='https://gtmetrix.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>GTmetrix</a> to achieve 90+ performance scores",
+        action: "Use <a href='https://pagespeed.web.dev/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Google PageSpeed Insights</a> and <a href='https://gtmetrix.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>GTmetrix speed test tool</a> to achieve 90+ performance scores",
         tip: "Page speed is a direct ranking factor. Sites loading in under 3 seconds have 70% lower bounce rates.",
         example: "Run PageSpeed test → Optimize images → Minify CSS/JS → Enable compression → Achieve 90+ score → Monitor monthly",
         isExpanded: false
@@ -245,7 +245,7 @@ export const seoModules: Module[] = [
         id: "partner-deals",
         title: "Exclusive Tool Partnerships ($15K+ Savings)",
         action: "Access negotiated rates on premium SEO tools used by 8-figure agencies",
-        tip: "Save thousands on <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs</a>, <a href='https://www.semrush.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>SEMrush</a>, and 25+ other tools that power million-dollar SEO campaigns.",
+        tip: "Save thousands on <a href='https://ahrefs.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>Ahrefs SEO toolkit</a>, <a href='https://www.semrush.com/' target='_blank' class='text-yellow-600 hover:text-yellow-700 underline'>SEMrush marketing suite</a>, and 25+ other tools that power million-dollar SEO campaigns.",
         example: "Get 60% off Ahrefs Pro → Access exclusive SEMrush rates → Save on 25+ premium tools → Reinvest savings into growth",
         isExpanded: false,
         isPaid: true

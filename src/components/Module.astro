@@ -10,124 +10,82 @@ const { module } = Astro.props;
 ---
 
 <div class="group">
-  <!-- Module Header -->
   <div
-    class={`w-full py-6 cursor-pointer transition-all duration-200 outline-none focus:outline-none ${module.isPaid ? 'opacity-75' : ''}`}
+    class={`w-full py-6 cursor-pointer ${module.isPaid ? "opacity-75" : ""}`}
     data-module-toggle={module.id}
-    data-module-paid={module.isPaid ? 'true' : 'false'}
     role="button"
     tabindex="0"
     aria-expanded="false"
-    aria-controls={`module-content-${module.id}`}
-    aria-describedby={`module-desc-${module.id}`}
   >
     <div class="flex items-start justify-between">
       <div class="flex-1">
-        <!-- Module Number & Title -->
         <div class="flex items-center mb-2">
           <span
-            class={`inline-flex items-center justify-center w-6 h-6 text-xs font-medium rounded-full mr-3 transition-colors duration-200 ${
-              module.isPaid 
-                ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900' 
-                : 'bg-gray-900 text-white group-hover:bg-yellow-400 group-hover:text-gray-900'
-            }`}
+            class={`w-6 h-6 text-xs rounded-full mr-3 flex items-center justify-center ${module.isPaid ? "bg-yellow-400 text-gray-900" : "bg-gray-900 text-white"}`}
           >
-            {module.isPaid ? '★' : module.id}
+            {module.isPaid ? "★" : module.id}
           </span>
-          <h2 class={`font-instrument-serif text-lg sm:text-xl font-normal ${module.isPaid ? 'text-gray-600' : 'text-gray-900'}`}>
+          <h2
+            class={`font-instrument-serif text-lg font-normal ${module.isPaid ? "text-gray-600" : "text-gray-900"}`}
+          >
             {module.title}
-            {module.isPaid && <span class="ml-2 text-xs font-geist text-yellow-600 font-medium">Premium</span>}
+            {
+              module.isPaid && (
+                <span class="ml-2 text-xs text-yellow-600">Premium</span>
+              )
+            }
           </h2>
         </div>
-
-        <!-- Module Description -->
         <p
-          id={`module-desc-${module.id}`}
-          class={`font-geist text-xs sm:text-sm ml-9 leading-relaxed ${module.isPaid ? 'text-gray-400' : 'text-gray-600'}`}
+          class={`text-xs ml-9 ${module.isPaid ? "text-gray-400" : "text-gray-600"}`}
         >
           {module.description}
         </p>
       </div>
-
-      <!-- Expand/Collapse Icon -->
-      <div class="ml-4 flex-shrink-0 mt-1">
-        <svg
-          class="w-4 h-4 text-gray-400 transform transition-transform duration-200 group-hover:text-gray-600"
-          data-chevron={module.id}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
+      <svg
+        class="w-4 h-4 text-gray-400"
+        data-chevron={module.id}
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M19 9l-7 7-7-7"></path>
+      </svg>
     </div>
   </div>
 
-  <!-- Module Content -->
-  <div
-    id={`module-content-${module.id}`}
-    class="module-content hidden"
-    data-module-content={module.id}
-  >
-    <div class="ml-9 mt-4 pb-8">
-      <!-- Steps Container -->
-      <div class="space-y-3">
-        {
-          module.steps.map((step) => (
-            <Step step={step} moduleId={module.id} />
-          ))
-        }
-      </div>
+  <div class="hidden" data-module-content={module.id}>
+    <div class="ml-9 mt-4 pb-8 space-y-3">
+      {module.steps.map((step) => <Step step={step} moduleId={module.id} />)}
     </div>
   </div>
 </div>
 
 <script>
-  // Module accordion functionality
-  document.addEventListener("DOMContentLoaded", () => {
-    const moduleToggles = document.querySelectorAll("[data-module-toggle]");
-
-    moduleToggles.forEach((toggle) => {
-      const handleToggle = () => {
-        const moduleId = toggle.getAttribute("data-module-toggle");
-        
+  // Ultra-minimal accordion
+  addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-module-toggle]").forEach((toggle) => {
+      const htmlToggle = toggle as HTMLElement;
+      htmlToggle.onclick = () => {
+        const id = htmlToggle.dataset.moduleToggle;
         const content = document.querySelector(
-          `[data-module-content="${moduleId}"]`,
-        );
-        const chevron = document.querySelector(`[data-chevron="${moduleId}"]`);
-        const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+          `[data-module-content="${id}"]`,
+        ) as HTMLElement;
+        const chevron = document.querySelector(
+          `[data-chevron="${id}"]`,
+        ) as HTMLElement;
+        const expanded = htmlToggle.getAttribute("aria-expanded") === "true";
 
         if (content && chevron) {
-          if (isExpanded) {
-            // Collapse
-            content.classList.add("hidden");
-            chevron.classList.remove("rotate-180");
-            toggle.setAttribute("aria-expanded", "false");
-          } else {
-            // Expand
-            content.classList.remove("hidden");
-            chevron.classList.add("rotate-180");
-            toggle.setAttribute("aria-expanded", "true");
-          }
+          content.classList.toggle("hidden", expanded);
+          chevron.style.transform = expanded ? "" : "rotate(180deg)";
+          htmlToggle.setAttribute("aria-expanded", (!expanded).toString());
         }
       };
-
-      toggle.addEventListener("click", handleToggle);
-
-      // Keyboard navigation
-      toggle.addEventListener("keydown", (e) => {
-        const keyEvent = e as KeyboardEvent;
-        if (keyEvent.key === "Enter" || keyEvent.key === " ") {
-          keyEvent.preventDefault();
-          handleToggle();
-        }
-      });
     });
   });
 </script>
@@ -137,7 +95,7 @@ const { module } = Astro.props;
   .module-content {
     transition: all 0.2s ease-out;
   }
-  
+
   /* Subtle hover effects */
   .group:hover .module-content:not(.hidden) {
     opacity: 0.95;
