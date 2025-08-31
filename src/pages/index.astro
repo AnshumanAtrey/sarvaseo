@@ -1,42 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Module from '../components/Module.astro';
-import { seoModules } from '../data/seoModules';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Module from "../components/Module.astro";
+import Footer from "../components/Footer.astro";
+import { seoModules } from "../data/seoModules";
 ---
 
-<Layout 
-  title="Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva SEO" 
+<Layout
+  title="Free SEO Checklist 2025 - Complete AI SEO Guide & Tools | Sarva SEO"
   description="Free comprehensive SEO checklist with 47+ actionable steps. Learn how to improve SEO rankings with AI tools, keyword research, technical SEO, and proven strategies. Start ranking higher today!"
 >
   <!-- Hero Section -->
   <Hero />
-  
 
-  
   <!-- Main Content - Ultra-Optimized -->
   <main class="min-h-screen max-w-3xl mx-auto px-6 space-y-8">
-    {seoModules.map((module) => (
-      <Module module={module} />
-    ))}
+    {seoModules.map((module) => <Module module={module} />)}
   </main>
-  
+
   <!-- SEO-Optimized Footer -->
-  <footer class="border-t border-gray-100 mt-16">
-    <div class="max-w-3xl mx-auto px-6 py-8 text-center">
-      <h3 class="font-instrument-serif text-lg text-gray-900 mb-3">
-        Sarva SEO
-      </h3>
-      <p class="text-xs text-gray-500 mb-6 max-w-sm mx-auto">
-        Your comprehensive SEO checklist tool for better search engine rankings and organic traffic growth.
-      </p>
-      <div class="border-t border-gray-100 pt-4">
-        <p class="text-xs text-gray-400">
-          © 2025 Sarva SEO. Built by <a href="https://atrey.dev" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-800 underline">atrey.dev</a> & <a href="https://www.linkedin.com/in/sayuj-pillai-139a07315/" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-800 underline">Sayuj Pillai</a>
-        </p>
-      </div>
-    </div>
-  </footer>
+  <Footer />
 </Layout>
 
 <style>
