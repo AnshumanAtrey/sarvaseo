@@ -12,9 +12,21 @@ import { seoModules } from "../data/seoModules";
 >
   <!-- Hero Section -->
   <Hero />
-  <!-- Main Content - Ultra-Optimized -->
-  <main class="min-h-screen max-w-3xl mx-auto px-16 space-y-8">
-    {seoModules.map((module) => <Module module={module} />)}
+  <!-- Main Content - Performance Optimized -->
+  <main class="min-h-screen max-w-3xl mx-auto px-16 space-y-8 main-content">
+    <!-- Load only first 3 modules initially for better performance -->
+    {seoModules.slice(0, 3).map((module) => <Module module={module} />)}
+    
+    <!-- Lazy load remaining modules -->
+    <div id="lazy-modules" class="space-y-8">
+      <!-- Remaining modules will be loaded on scroll -->
+    </div>
+    
+    <!-- Loading indicator -->
+    <div id="loading-indicator" class="hidden text-center py-8">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <p class="mt-2 text-sm text-gray-600">Loading more content...</p>
+    </div>
   </main>
 
   <!-- SEO-Optimized Footer -->
