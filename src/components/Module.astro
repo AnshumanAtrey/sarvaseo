@@ -8,9 +8,9 @@ export interface Props {
 const { module } = Astro.props;
 ---
 
-<div class="group">
+<div class="group hover:opacity-95 transition-opacity duration-200">
   <div
-    class={`w-full py-6 cursor-pointer ${module.isPaid ? "opacity-75" : ""}`}
+    class={`w-full py-6 cursor-pointer transition-all duration-200 ease-out focus:outline-none focus-visible:bg-yellow-50 focus-visible:rounded-lg ${module.isPaid ? "opacity-75" : ""}`}
     data-module-toggle={module.id}
     role="button"
     tabindex="0"
@@ -26,7 +26,7 @@ const { module } = Astro.props;
             {module.isPaid ? "★" : module.id}
           </span>
           <h2
-            class={`font-instrument-serif text-lg font-normal ${module.isPaid ? "text-gray-600" : "text-gray-900"}`}
+            class={`font-instrument-serif text-xl font-normal ${module.isPaid ? "text-gray-600" : "text-gray-900"}`}
           >
             {module.title}
             {
@@ -59,7 +59,7 @@ const { module } = Astro.props;
   </div>
 
   <div class="hidden" data-module-content={module.id}>
-    <div class="ml-9 mt-4 pb-8 space-y-3">
+    <div class="ml-9 mt-4 space-y-3">
       {
         module.steps.map((step) => {
           const stepId = `${module.id}-${step.id}`;
@@ -68,7 +68,7 @@ const { module } = Astro.props;
               class={`pl-4 ${step.isPaid ? "border-l border-gray-300" : "border-l border-gray-200"}`}
             >
               <div
-                class={`w-full py-3 cursor-pointer ${step.isPaid ? "opacity-75" : ""}`}
+                class={`w-full py-3 cursor-pointer transition-all duration-150 ease-out focus:outline-none focus-visible:bg-yellow-50 focus-visible:rounded-lg ${step.isPaid ? "opacity-75" : ""}`}
                 data-step-toggle={stepId}
                 data-step-paid={step.isPaid ? "true" : "false"}
                 role="button"
@@ -240,30 +240,4 @@ const { module } = Astro.props;
   };
 </script>
 
-<style>
-  /* Smooth transitions */
-  .module-content {
-    transition: all 0.2s ease-out;
-  }
 
-  .step-content {
-    transition: all 0.15s ease-out;
-  }
-
-  /* Subtle hover effects */
-  .group:hover .module-content:not(.hidden) {
-    opacity: 0.95;
-  }
-
-  /* Custom focus styles - remove default outline */
-  [role="button"]:focus {
-    outline: none !important;
-    box-shadow: none !important;
-  }
-
-  /* Optional: Add subtle focus indicator */
-  [role="button"]:focus-visible {
-    background-color: rgba(254, 240, 138, 0.1);
-    border-radius: 8px;
-  }
-</style>

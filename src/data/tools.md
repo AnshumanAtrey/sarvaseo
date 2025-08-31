@@ -9,3 +9,5 @@ https://ahrefs.com/
 https://marketingplatform.google.com/home
 https://business.google.com/in/business-profile/
 https://ahrefs.com/backlink-checker
+https://www.bing.com/indexnow/getstarted
+https://mxtoolbox.com/SuperTool.aspx
