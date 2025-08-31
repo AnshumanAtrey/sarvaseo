@@ -43,6 +43,7 @@ const {
 			content="vfl_Z9jHpXJBVtYEGNKNsxdFq_9HMWyKZNYF8ZuH4WE"
 		/>
 		<meta name="msvalidate.01" content="09DA5E83D4AFE5E809803FF539F307C2" />
+		<meta name="IndexNow" content="0177dad855f84bc3900bf90ee223115c" />
 		<link rel="canonical" href="https://sarvaseo.com/" />
 
 		<!-- Open Graph Meta Tags -->
@@ -153,6 +154,15 @@ const {
 						});
 					} catch (e) {}
 				}
+
+				// Auto-submit to IndexNow for instant indexing
+				setTimeout(() => {
+					fetch('/api/indexnow', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ url: window.location.href })
+					}).catch(() => {}); // Silent fail
+				}, 3000);
 			});
 		</script>
 
