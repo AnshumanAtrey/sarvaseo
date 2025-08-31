@@ -1,7 +1,7 @@
 // IndexNow utility functions for instant search engine indexing
 
 const INDEXNOW_KEY = '0177dad855f84bc3900bf90ee223115c';
-const SITE_HOST = 'sarvaseo.com';
+const SITE_HOST = 'sarvaseo.atrey.dev';
 const KEY_LOCATION = `https://${SITE_HOST}/${INDEXNOW_KEY}.txt`;
 
 /**

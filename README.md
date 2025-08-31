@@ -1,10 +1,10 @@
-# 🌟 Sarva SEO - Free SEO Checklist 2025
+# 🌟 SarvaSEO - Free SEO Checklist 2025
 
 **The most comprehensive free SEO checklist and AI-powered guide to boost your search engine rankings.**
 
 A complete, step-by-step SEO toolkit with 47+ actionable strategies, built for modern websites and AI-enhanced optimization.
 
-## 🚀 Why Sarva SEO?
+## 🚀 Why SarvaSEO?
 
 - **100% Free SEO Checklist** - No hidden costs, no signup required
 - **AI SEO Integration** - Learn how to leverage AI tools for better rankings  
@@ -175,7 +175,7 @@ This tool helps you dominate searches for:
 
 ## 🌐 Live Demo
 
-Visit [Sarva SEO](https://sarvaseo.com) to access the complete free checklist.
+Visit [SarvaSEO](https://sarvaseo.atrey.dev) to access the complete free checklist.
 
 ## 👨‍💻 Built By
 

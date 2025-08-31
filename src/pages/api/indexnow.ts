@@ -14,9 +14,9 @@ export const POST: APIRoute = async ({ request }) => {
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: JSON.stringify({
-        host: 'sarvaseo.com',
+        host: 'sarvaseo.atrey.dev',
         key: '0177dad855f84bc3900bf90ee223115c',
-        keyLocation: 'https://sarvaseo.com/0177dad855f84bc3900bf90ee223115c.txt',
+        keyLocation: 'https://sarvaseo.atrey.dev/0177dad855f84bc3900bf90ee223115c.txt',
         urlList: body.urls || [body.url]
       })
     });
@@ -60,7 +60,7 @@ export const GET: APIRoute = async () => {
   return new Response(JSON.stringify({
     message: 'IndexNow API endpoint - Use POST to submit URLs',
     key: '0177dad855f84bc3900bf90ee223115c',
-    keyLocation: 'https://sarvaseo.com/0177dad855f84bc3900bf90ee223115c.txt'
+    keyLocation: 'https://sarvaseo.atrey.dev/0177dad855f84bc3900bf90ee223115c.txt'
   }), {
     status: 200,
     headers: {
