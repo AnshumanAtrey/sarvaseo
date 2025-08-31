@@ -232,16 +232,17 @@ const {
 		<link rel="dns-prefetch" href="https://www.bing.com" />
 		<link rel="dns-prefetch" href="https://yandex.com" />
 
-		<!-- Non-blocking Font Loading with Fallbacks -->
+		<!-- Non-blocking Font Loading with Error Handling -->
 		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Playfair+Display:wght@400&display=swap"
 			rel="preload"
 			as="style"
 			onload="this.onload=null;this.rel='stylesheet'"
+			onerror="console.warn('Font loading failed, using fallbacks')"
 		/>
 		<noscript>
 			<link
-				href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:wght@400&display=swap"
+				href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Playfair+Display:wght@400&display=swap"
 				rel="stylesheet"
 			/>
 		</noscript>
@@ -249,8 +250,8 @@ const {
 		<!-- Critical CSS - Inlined for Performance -->
 		<style>
 			/* Font fallbacks to prevent layout shift */
-			.font-geist { font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-			.font-instrument-serif { font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif; }
+			.font-inter { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+			.font-playfair { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
 			
 			/* Critical above-the-fold styles */
 			body { margin: 0; padding: 0; }
@@ -265,20 +266,7 @@ const {
 			.module-container { contain: layout style; }
 			.step-container { contain: layout; }
 		</style>
-		<link
-			rel="preload"
-			href="https://fonts.gstatic.com/s/geist/v1/gyBhhwUxI-K4-9s-DgqjPHNm.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="https://fonts.gstatic.com/s/instrumentserif/v4/jizBRFtNs2P-hK546B9-QUJyTSL0RCQ.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
+
 
 		<!-- Ultra-Minimal Performance Script -->
 		<script is:inline>
@@ -309,15 +297,25 @@ const {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({ url: window.location.href })
-					}).catch(() => {}); // Silent fail
+					}).catch((error) => {
+						console.warn('IndexNow submission failed:', error.message);
+					});
 				}, 3000);
+
+				// Error handling for better debugging
+				window.addEventListener('error', function(e) {
+					if (e.filename && e.filename.includes('fonts.gstatic.com')) {
+						console.warn('Font loading error handled gracefully:', e.message);
+						e.preventDefault();
+					}
+				});
 			});
 		</script>
 
 		<!-- Valid Security Meta Tags -->
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:;"
+			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.clarity.ms https://c.clarity.ms; img-src 'self' data: https://c.clarity.ms;"
 		/>
 		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 		<meta
@@ -331,7 +329,7 @@ const {
 			}
 		</style>
 	</head>
-	<body class="font-geist text-gray-900 antialiased">
+	<body class="font-inter text-gray-900 antialiased">
 		<div class="min-h-screen bg-gradient-to-br from-white to-yellow-50">
 			<slot />
 		</div>
