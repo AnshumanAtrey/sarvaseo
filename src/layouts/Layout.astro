@@ -210,7 +210,7 @@ const {
 				}
 			};
 
-			// STEP LEVEL: Independent toggles within modules
+			// STEP LEVEL: Accordion behavior within each module (one step open at a time per module)
 			window.toggleStep = function (stepId) {
 				const toggle = document.querySelector(
 					`[data-step-toggle="${stepId}"]`,
@@ -232,7 +232,25 @@ const {
 					return;
 				}
 
-				// Toggle step independently
+				// Find the parent module to close other steps within the same module
+				const parentModule = toggle.closest('[data-module-content]');
+				if (parentModule) {
+					// Close all other steps within the same module
+					parentModule.querySelectorAll('[data-step-toggle]').forEach((otherStepToggle) => {
+						const otherStepId = otherStepToggle.getAttribute('data-step-toggle');
+						if (otherStepId && otherStepId !== stepId) {
+							const otherContent = document.querySelector(`[data-step-content="${otherStepId}"]`);
+							const otherChevron = document.querySelector(`[data-step-chevron="${otherStepId}"]`);
+							if (otherContent && otherChevron) {
+								otherContent.classList.add("hidden");
+								otherChevron.style.transform = "";
+								otherStepToggle.setAttribute("aria-expanded", "false");
+							}
+						}
+					});
+				}
+
+				// Toggle current step
 				if (expanded) {
 					content.classList.add("hidden");
 					chevron.style.transform = "";
@@ -449,7 +467,7 @@ const {
 		<!-- Valid Security Meta Tags -->
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://c.clarity.ms; img-src 'self' data: https://www.google-analytics.com https://c.clarity.ms;"
+			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://c.clarity.ms https://l.clarity.ms; img-src 'self' data: https://www.google-analytics.com https://c.clarity.ms;"
 		/>
 		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 		<meta
