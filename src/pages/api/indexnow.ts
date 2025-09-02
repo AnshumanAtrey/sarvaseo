@@ -3,10 +3,10 @@ import type { APIRoute } from 'astro';
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    
+
     // IndexNow API endpoint
     const indexNowUrl = 'https://api.indexnow.org/indexnow';
-    
+
     // Submit to IndexNow
     const response = await fetch(indexNowUrl, {
       method: 'POST',
@@ -22,9 +22,9 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     if (response.ok) {
-      return new Response(JSON.stringify({ 
-        success: true, 
-        message: 'URLs submitted to IndexNow successfully' 
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'URLs submitted to IndexNow successfully'
       }), {
         status: 200,
         headers: {
@@ -34,10 +34,10 @@ export const POST: APIRoute = async ({ request }) => {
         }
       });
     } else {
-      return new Response(JSON.stringify({ 
-        success: false, 
+      return new Response(JSON.stringify({
+        success: false,
         message: 'Failed to submit to IndexNow',
-        status: response.status 
+        status: response.status
       }), {
         status: response.status,
         headers: {
@@ -47,9 +47,9 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
   } catch (error) {
-    return new Response(JSON.stringify({ 
-      success: false, 
-      message: 'Internal server error' 
+    return new Response(JSON.stringify({
+      success: false,
+      message: 'Internal server error'
     }), {
       status: 500,
       headers: {
