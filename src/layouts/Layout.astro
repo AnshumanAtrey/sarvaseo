@@ -75,7 +75,7 @@ const {
 		<meta name="twitter:image:alt" content="SarvaSEO - Free SEO Checklist 2025 with AI Tools and Proven Strategies" />
 
 		<!-- SEO-Critical Meta Tags -->
-		<meta name="theme-color" content="#EAB308" />
+		<meta name="theme-color" content="#d4911a" />
 		<meta name="application-name" content="SarvaSEO" />
 		<meta name="apple-mobile-web-app-title" content="SarvaSEO" />
 
@@ -149,7 +149,7 @@ const {
 			})(window, document, "clarity", "script", "t3llz3cw5l");
 		</script>
 
-		<!-- Two-Level Interactive System: Modules + Steps -->
+		<!-- Interactive System: Module Accordion + Inline Toggles -->
 		<script is:inline>
 			// Performance-optimized module system
 			window.loadedModules = new Set();
@@ -210,60 +210,6 @@ const {
 				}
 			};
 
-			// STEP LEVEL: Accordion behavior within each module (one step open at a time per module)
-			window.toggleStep = function (stepId) {
-				const toggle = document.querySelector(
-					`[data-step-toggle="${stepId}"]`,
-				);
-				const content = document.querySelector(
-					`[data-step-content="${stepId}"]`,
-				);
-				const chevron = document.querySelector(
-					`[data-step-chevron="${stepId}"]`,
-				);
-				const expanded =
-					toggle?.getAttribute("aria-expanded") === "true";
-
-				if (!content || !chevron || !toggle) return;
-
-				// Check if step is premium (locked) and user not authenticated
-				var stepEl = toggle.closest("[data-premium='true']");
-				if (stepEl && stepEl.classList.contains("premium-locked")) {
-					// Redirect to login for locked steps
-					window.location.href = "/api/auth/linkedin/login";
-					return;
-				}
-
-				// Find the parent module to close other steps within the same module
-				const parentModule = toggle.closest('[data-module-content]');
-				if (parentModule) {
-					// Close all other steps within the same module
-					parentModule.querySelectorAll('[data-step-toggle]').forEach((otherStepToggle) => {
-						const otherStepId = otherStepToggle.getAttribute('data-step-toggle');
-						if (otherStepId && otherStepId !== stepId) {
-							const otherContent = document.querySelector(`[data-step-content="${otherStepId}"]`);
-							const otherChevron = document.querySelector(`[data-step-chevron="${otherStepId}"]`);
-							if (otherContent && otherChevron) {
-								otherContent.classList.add("hidden");
-								otherChevron.style.transform = "";
-								otherStepToggle.setAttribute("aria-expanded", "false");
-							}
-						}
-					});
-				}
-
-				// Toggle current step
-				if (expanded) {
-					content.classList.add("hidden");
-					chevron.style.transform = "";
-					toggle.setAttribute("aria-expanded", "false");
-				} else {
-					content.classList.remove("hidden");
-					chevron.style.transform = "rotate(180deg)";
-					toggle.setAttribute("aria-expanded", "true");
-				}
-			};
-
 			// Load module content
 			window.loadModuleContent = function (moduleId) {
 				if (window.loadedModules.has(moduleId)) return;
@@ -277,24 +223,20 @@ const {
 				window.loadedModules.add(moduleId);
 			};
 
-			// Event delegation with proper isolation
+			// Event delegation
 			document.addEventListener("click", function (e) {
-				// Handle step toggles first (more specific) - only for non-premium steps
-				const stepToggle = e.target.closest("[data-step-toggle]");
-				if (stepToggle) {
+				// Handle premium step clicks (redirect to login)
+				var premiumStep = e.target.closest("[data-premium='true']");
+				if (premiumStep && premiumStep.classList.contains("premium-locked")) {
 					e.preventDefault();
 					e.stopPropagation();
-					const stepId = stepToggle.getAttribute("data-step-toggle");
-					if (stepId) {
-						// Only toggle if stepId exists (premium steps have null)
-						toggleStep(stepId);
-					}
+					window.location.href = "/api/auth/linkedin/login";
 					return;
 				}
 
-				// Handle module toggles (only if not inside step content)
+				// Handle module toggles (only if not inside inline content)
 				const moduleToggle = e.target.closest("[data-module-toggle]");
-				if (moduleToggle && !e.target.closest("[data-step-content]")) {
+				if (moduleToggle) {
 					e.preventDefault();
 					e.stopPropagation();
 					const moduleId =
@@ -304,22 +246,9 @@ const {
 				}
 			});
 
-			// Keyboard support for both levels
+			// Keyboard support
 			document.addEventListener("keydown", function (e) {
 				if (e.key === "Enter" || e.key === " ") {
-					// Handle step keyboard navigation - only for non-premium steps
-					const stepToggle = e.target.closest("[data-step-toggle]");
-					if (stepToggle) {
-						e.preventDefault();
-						const stepId =
-							stepToggle.getAttribute("data-step-toggle");
-						if (stepId) {
-							// Only toggle if stepId exists (premium steps have null)
-							toggleStep(stepId);
-						}
-						return;
-					}
-
 					// Handle module keyboard navigation
 					const moduleToggle = e.target.closest(
 						"[data-module-toggle]",
@@ -345,35 +274,100 @@ const {
 				}
 
 				function unlockPremiumContent() {
-					document.querySelectorAll(".premium-locked").forEach(function (el) {
-						el.classList.remove("premium-locked");
-					});
-					document.querySelectorAll("[data-lock-badge]").forEach(function (el) {
-						el.textContent = "✓ Unlocked";
-						el.classList.remove("text-yellow-600");
-						el.classList.add("text-green-600");
-					});
-					document.querySelectorAll("[data-module-lock-badge]").forEach(function (el) {
-						el.textContent = "✓ Unlocked";
-						el.classList.remove("text-yellow-600");
-						el.classList.add("text-green-600");
-					});
-					// Remove dimming on paid modules
-					document.querySelectorAll("[data-premium='true']").forEach(function (el) {
-						var header = el.querySelector("[data-step-toggle]");
-						if (header) {
-							header.classList.remove("bg-yellow-50", "border", "border-yellow-200");
-							header.classList.add("hover:bg-gray-50");
+					// Module 5 (Cartel) - show "coming soon" message
+					var cartelModule = document.querySelector("[data-module-id='5']");
+					if (cartelModule) {
+						cartelModule.querySelectorAll("[data-lock-badge]").forEach(function (el) {
+							el.textContent = "🚀 Coming soon";
+							el.classList.remove("text-gold-600");
+							el.classList.add("text-gray-500");
+						});
+						var cartelModuleBadge = cartelModule.querySelector("[data-module-lock-badge]");
+						if (cartelModuleBadge) {
+							cartelModuleBadge.textContent = "🚀 Coming soon, we will reach out to you";
+							cartelModuleBadge.classList.remove("text-gold-600");
+							cartelModuleBadge.classList.add("text-gray-500");
 						}
-						var title = el.querySelector("h3");
-						if (title) {
-							title.classList.remove("text-gray-600");
-							title.classList.add("text-gray-900");
+						cartelModule.querySelectorAll("[data-premium='true']").forEach(function (el) {
+							el.classList.remove("premium-locked");
+							var wrapper = el.querySelector(".bg-stone-50");
+							if (wrapper) wrapper.classList.remove("bg-stone-50");
+							var title = el.querySelector("h3");
+							if (title) {
+								title.classList.remove("text-gray-500");
+								title.classList.add("text-gray-900");
+							}
+						});
+						var cartelToggle = cartelModule.querySelector("[data-module-toggle]");
+						if (cartelToggle) cartelToggle.classList.remove("opacity-75");
+					}
+
+					// Module 3 (Automation Toolkit) - LinkedIn gets link, others show "launching soon"
+					var toolkitModule = document.querySelector("[data-module-id='3']");
+					if (toolkitModule) {
+						toolkitModule.querySelectorAll("[data-premium='true']").forEach(function (el) {
+							el.classList.remove("premium-locked");
+							var wrapper = el.querySelector(".bg-stone-50");
+							if (wrapper) wrapper.classList.remove("bg-stone-50");
+							var title = el.querySelector("h3");
+							if (title) {
+								title.classList.remove("text-gray-500");
+								title.classList.add("text-gray-900");
+							}
+							var stepId = el.getAttribute("data-step");
+							var badge = el.querySelector("[data-lock-badge]");
+							if (stepId === "linkedin-engagement-bot") {
+								if (badge) {
+									badge.innerHTML = "<a href='https://chromewebstore.google.com/detail/licon-linkedin-connector/kgjdogbeahmdgdkddigjfofmdnkpcade' target='_blank' class='text-amber-700 hover:text-amber-800 underline'>🔗 Get Chrome Extension</a>";
+									badge.classList.remove("text-gold-600");
+								}
+							} else {
+								if (badge) {
+									badge.textContent = "🚀 Launching soon";
+									badge.classList.remove("text-gold-600");
+									badge.classList.add("text-gray-500");
+								}
+							}
+						});
+						var toolkitModuleBadge = toolkitModule.querySelector("[data-module-lock-badge]");
+						if (toolkitModuleBadge) {
+							toolkitModuleBadge.textContent = "✓ Unlocked";
+							toolkitModuleBadge.classList.remove("text-gold-600");
+							toolkitModuleBadge.classList.add("text-green-600");
 						}
-					});
-					// Remove module-level dimming
-					document.querySelectorAll("[data-module-toggle]").forEach(function (toggle) {
-						toggle.classList.remove("opacity-75");
+						var toolkitToggle = toolkitModule.querySelector("[data-module-toggle]");
+						if (toolkitToggle) toolkitToggle.classList.remove("opacity-75");
+					}
+
+					// All other premium modules - standard unlock
+					document.querySelectorAll("[data-module-id]").forEach(function (mod) {
+						var modId = mod.getAttribute("data-module-id");
+						if (modId === "3" || modId === "5") return;
+
+						mod.querySelectorAll(".premium-locked").forEach(function (el) {
+							el.classList.remove("premium-locked");
+						});
+						mod.querySelectorAll("[data-lock-badge]").forEach(function (el) {
+							el.textContent = "✓ Unlocked";
+							el.classList.remove("text-gold-600");
+							el.classList.add("text-green-600");
+						});
+						mod.querySelectorAll("[data-module-lock-badge]").forEach(function (el) {
+							el.textContent = "✓ Unlocked";
+							el.classList.remove("text-gold-600");
+							el.classList.add("text-green-600");
+						});
+						mod.querySelectorAll("[data-premium='true']").forEach(function (el) {
+							var wrapper = el.querySelector(".bg-stone-50");
+							if (wrapper) wrapper.classList.remove("bg-stone-50");
+							var title = el.querySelector("h3");
+							if (title) {
+								title.classList.remove("text-gray-500");
+								title.classList.add("text-gray-900");
+							}
+						});
+						var toggle = mod.querySelector("[data-module-toggle]");
+						if (toggle) toggle.classList.remove("opacity-75");
 					});
 				}
 
@@ -573,7 +567,7 @@ const {
 		</style>
 	</head>
 	<body class="font-geist text-gray-900 antialiased">
-		<div class="min-h-screen bg-gradient-to-br from-white to-yellow-50">
+		<div class="min-h-screen bg-gradient-to-br from-white to-stone-50">
 			<slot />
 		</div>
 	</body>

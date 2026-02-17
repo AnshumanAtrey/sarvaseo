@@ -22,7 +22,7 @@ html {
 
 /* Accessibility - Essential only */
 input:focus, textarea:focus, select:focus {
-  outline: 2px solid #FCD34D;
+  outline: 2px solid #d4a843;
   outline-offset: 2px;
 }
 
@@ -54,6 +54,78 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
+/* Callout boxes - Stripe docs style */
+.callout-tip {
+  border-left: 3px solid #d4a843;
+  background-color: #fafaf9;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.callout-example {
+  border-left: 3px solid #94a3b8;
+  background-color: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+/* Gold metallic text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #b8892e 0%, #d4a843 25%, #edd06b 50%, #d4a843 75%, #9a6e24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* One-time gold shimmer animation */
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #9a6e24 0%,
+    #d4a843 20%,
+    #edd06b 40%,
+    #faefc5 50%,
+    #edd06b 60%,
+    #d4a843 80%,
+    #9a6e24 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2s ease-in-out forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Grain texture overlay */
+.grain-overlay {
+  position: relative;
+}
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+.grain-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Premium gold circle badge */
+.gold-circle {
+  background: linear-gradient(135deg, #d4a843, #edd06b);
+  color: #66441c;
+}
+
 /* High contrast support */
 @media (prefers-contrast: high) {
   .bg-yellow-300 {
@@ -62,5 +134,9 @@ input:focus, textarea:focus, select:focus {
   }
   .text-gray-600 {
     color: #000 !important;
+  }
+  .text-gold-gradient,
+  .text-gold-shimmer {
+    -webkit-text-fill-color: #000 !important;
   }
 }
