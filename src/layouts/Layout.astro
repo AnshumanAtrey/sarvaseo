@@ -18,6 +18,14 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Preconnects FIRST for fastest DNS/TLS handshake -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://www.googletagmanager.com" />
+		<link rel="preconnect" href="https://www.google-analytics.com" />
+		<link rel="preconnect" href="https://www.clarity.ms" />
+
 		<!-- Favicon Configuration - Multiple formats for maximum compatibility -->
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -123,30 +131,29 @@ const {
 			}
 		</script>
 
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-86FV37CDCN"></script>
+		<!-- GA + Clarity deferred until after page load to avoid blocking FCP/LCP -->
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
-			
 			gtag('config', 'G-86FV37CDCN');
-		</script>
 
-		<!-- Microsoft Clarity Analytics -->
-		<script is:inline>
-			(function (c, l, a, r, i, t, y) {
-				c[a] =
-					c[a] ||
-					function () {
-						(c[a].q = c[a].q || []).push(arguments);
-					};
-				t = l.createElement(r);
-				t.async = 1;
-				t.src = "https://www.clarity.ms/tag/" + i + "?ref=bwt";
-				y = l.getElementsByTagName(r)[0];
-				y.parentNode.insertBefore(t, y);
-			})(window, document, "clarity", "script", "t3llz3cw5l");
+			addEventListener('load', function() {
+				// Load GA
+				var ga = document.createElement('script');
+				ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-86FV37CDCN';
+				ga.async = true;
+				document.head.appendChild(ga);
+
+				// Load Clarity
+				(function (c, l, a, r, i, t, y) {
+					c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+					t = l.createElement(r); t.async = 1;
+					t.src = "https://www.clarity.ms/tag/" + i + "?ref=bwt";
+					y = l.getElementsByTagName(r)[0];
+					y.parentNode.insertBefore(t, y);
+				})(window, document, "clarity", "script", "t3llz3cw5l");
+			});
 		</script>
 
 		<!-- Interactive System: Module Accordion + Inline Toggles -->
@@ -403,12 +410,7 @@ const {
 			})();
 		</script>
 
-		<!-- Critical Resource Hints - Optimized -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="preconnect" href="https://www.googletagmanager.com" />
-		<link rel="preconnect" href="https://www.google-analytics.com" />
-		<link rel="preconnect" href="https://www.clarity.ms" />
+		<!-- DNS Prefetch for non-critical origins -->
 		<link rel="dns-prefetch" href="https://api.indexnow.org" />
 		<link rel="dns-prefetch" href="https://www.bing.com" />
 		<link rel="dns-prefetch" href="https://yandex.com" />
@@ -495,56 +497,17 @@ const {
 			}
 		</style>
 
-		<!-- Ultra-Minimal Performance Script -->
+		<!-- Deferred non-critical scripts -->
 		<script is:inline>
-			// Essential LCP tracking only
-			addEventListener("load", () => {
-				if ("PerformanceObserver" in window) {
-					try {
-						new PerformanceObserver((list) => {
-							const entries = list.getEntries();
-							if (entries.length && typeof gtag !== "undefined") {
-								gtag("event", "LCP", {
-									value: Math.round(
-										entries[entries.length - 1].startTime,
-									),
-									event_category: "Performance",
-								});
-							}
-						}).observe({
-							type: "largest-contentful-paint",
-							buffered: true,
-						});
-					} catch (e) {}
-				}
-
-				// Auto-submit to IndexNow for instant indexing
-				setTimeout(() => {
+			addEventListener("load", function() {
+				// IndexNow auto-submit (delayed)
+				setTimeout(function() {
 					fetch("/api/indexnow", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ url: window.location.href }),
-					}).catch((error) => {
-						console.warn(
-							"IndexNow submission failed:",
-							error.message,
-						);
-					});
-				}, 3000);
-
-				// Error handling for better debugging
-				window.addEventListener("error", function (e) {
-					if (
-						e.filename &&
-						e.filename.includes("fonts.gstatic.com")
-					) {
-						console.warn(
-							"Font loading error handled gracefully:",
-							e.message,
-						);
-						e.preventDefault();
-					}
-				});
+						body: JSON.stringify({ url: location.href }),
+					}).catch(function() {});
+				}, 5000);
 			});
 		</script>
 

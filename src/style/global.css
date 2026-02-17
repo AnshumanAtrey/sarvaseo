@@ -73,7 +73,7 @@ input:focus, textarea:focus, select:focus {
   background-clip: text;
 }
 
-/* One-time gold shimmer animation */
+/* One-time gold shimmer animation - GPU composited */
 .text-gold-shimmer {
   background: linear-gradient(
     90deg,
@@ -90,6 +90,7 @@ input:focus, textarea:focus, select:focus {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 2s ease-in-out forwards;
+  will-change: background-position;
 }
 
 @keyframes shimmer {
