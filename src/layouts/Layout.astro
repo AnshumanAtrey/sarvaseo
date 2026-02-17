@@ -226,9 +226,11 @@ const {
 
 				if (!content || !chevron || !toggle) return;
 
-				// Check if step is premium (locked)
-				if (toggle.classList.contains("cursor-not-allowed")) {
-					// Show premium message or do nothing for locked steps
+				// Check if step is premium (locked) and user not authenticated
+				var stepEl = toggle.closest("[data-premium='true']");
+				if (stepEl && stepEl.classList.contains("premium-locked")) {
+					// Redirect to login for locked steps
+					window.location.href = "/api/auth/linkedin/login";
 					return;
 				}
 
@@ -333,6 +335,80 @@ const {
 			});
 		</script>
 
+		<!-- Auth Management Script -->
+		<script is:inline>
+			(function () {
+				function isAuthenticated() {
+					return document.cookie.split(";").some(function (c) {
+						return c.trim().startsWith("sarvaseo_auth=");
+					});
+				}
+
+				function unlockPremiumContent() {
+					document.querySelectorAll(".premium-locked").forEach(function (el) {
+						el.classList.remove("premium-locked");
+					});
+					document.querySelectorAll("[data-lock-badge]").forEach(function (el) {
+						el.textContent = "✓ Unlocked";
+						el.classList.remove("text-yellow-600");
+						el.classList.add("text-green-600");
+					});
+					document.querySelectorAll("[data-module-lock-badge]").forEach(function (el) {
+						el.textContent = "✓ Unlocked";
+						el.classList.remove("text-yellow-600");
+						el.classList.add("text-green-600");
+					});
+					// Remove dimming on paid modules
+					document.querySelectorAll("[data-premium='true']").forEach(function (el) {
+						var header = el.querySelector("[data-step-toggle]");
+						if (header) {
+							header.classList.remove("bg-yellow-50", "border", "border-yellow-200");
+							header.classList.add("hover:bg-gray-50");
+						}
+						var title = el.querySelector("h3");
+						if (title) {
+							title.classList.remove("text-gray-600");
+							title.classList.add("text-gray-900");
+						}
+					});
+					// Remove module-level dimming
+					document.querySelectorAll("[data-module-toggle]").forEach(function (toggle) {
+						toggle.classList.remove("opacity-75");
+					});
+				}
+
+				function updateAuthUI() {
+					var userEl = document.getElementById("auth-user");
+
+					if (isAuthenticated()) {
+						if (userEl) userEl.classList.remove("hidden");
+						unlockPremiumContent();
+					}
+				}
+
+				function checkAuthStatus() {
+					var params = new URLSearchParams(window.location.search);
+					if (params.has("auth")) {
+						// Clean the URL
+						var url = new URL(window.location.href);
+						url.searchParams.delete("auth");
+						window.history.replaceState({}, "", url.pathname);
+					}
+				}
+
+				// Run on DOM ready
+				if (document.readyState === "loading") {
+					document.addEventListener("DOMContentLoaded", function () {
+						checkAuthStatus();
+						updateAuthUI();
+					});
+				} else {
+					checkAuthStatus();
+					updateAuthUI();
+				}
+			})();
+		</script>
+
 		<!-- Critical Resource Hints - Optimized -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -409,6 +485,20 @@ const {
 			.step-container {
 				contain: layout;
 			}
+
+			/* Premium locked overlay */
+			.premium-locked {
+				position: relative;
+				opacity: 0.6;
+			}
+			.premium-locked::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.9));
+				pointer-events: none;
+				border-radius: 0.25rem;
+			}
 		</style>
 
 		<!-- Ultra-Minimal Performance Script -->
@@ -467,7 +557,7 @@ const {
 		<!-- Valid Security Meta Tags -->
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://c.clarity.ms https://l.clarity.ms; img-src 'self' data: https://www.google-analytics.com https://c.clarity.ms;"
+			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://c.clarity.ms https://l.clarity.ms https://www.linkedin.com; img-src 'self' data: https://www.google-analytics.com https://c.clarity.ms;"
 		/>
 		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 		<meta

@@ -1,0 +1,54 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Privacy Policy | SarvaSEO"
+  description="SarvaSEO privacy policy covering data collection, usage, cookies, and your rights."
+>
+  <main class="max-w-3xl mx-auto px-6 py-16">
+    <h1 class="font-instrument text-4xl text-gray-900 font-light mb-8">Privacy Policy</h1>
+    <p class="text-xs text-gray-500 mb-8">Last updated: February 2026</p>
+
+    <div class="space-y-8 text-sm text-gray-700 leading-relaxed">
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">Data We Collect</h2>
+        <p>When you sign in with LinkedIn, we receive your <strong>name</strong> and <strong>email address</strong> from your LinkedIn profile. We do not access your LinkedIn connections, posts, or any other profile data.</p>
+      </section>
+
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">How We Use Your Data</h2>
+        <p>Your LinkedIn profile information is used solely to authenticate your session and unlock premium content on SarvaSEO. We do not sell, share, or transfer your personal data to any third party for marketing purposes.</p>
+      </section>
+
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">Cookies</h2>
+        <p>We use a single session cookie (<code class="bg-gray-100 px-1 rounded">sarvaseo_auth</code>) to keep you logged in. This cookie is cryptographically signed, contains only your name and email, and expires after 7 days. No tracking cookies are set by the authentication system.</p>
+      </section>
+
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">Third-Party Services</h2>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>LinkedIn OAuth</strong> &mdash; used for authentication only</li>
+          <li><strong>Google Analytics</strong> &mdash; anonymous usage analytics</li>
+          <li><strong>Microsoft Clarity</strong> &mdash; anonymous user behavior analytics</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">Your Rights</h2>
+        <p>You can log out at any time to clear your session cookie. Since we do not store your data in any database, logging out effectively removes all your personal information from our system. To request data deletion, contact us and we will confirm that no personal data is retained.</p>
+      </section>
+
+      <section>
+        <h2 class="font-instrument text-xl text-gray-900 mb-3">Contact</h2>
+        <p>For questions about this privacy policy, visit <a href="https://atrey.dev" target="_blank" rel="noopener" class="text-yellow-600 hover:text-yellow-700 underline">atrey.dev</a>.</p>
+      </section>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-gray-100">
+      <a href="/" class="text-sm text-gray-500 hover:text-gray-700 underline">&larr; Back to SarvaSEO</a>
+    </div>
+  </main>
+</Layout>
