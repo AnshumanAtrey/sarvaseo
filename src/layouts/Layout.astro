@@ -276,7 +276,7 @@ const {
 			(function () {
 				function isAuthenticated() {
 					return document.cookie.split(";").some(function (c) {
-						return c.trim().startsWith("sarvaseo_auth=");
+						return c.trim().startsWith("sarvaseo_logged_in=");
 					});
 				}
 
@@ -389,7 +389,9 @@ const {
 
 				function checkAuthStatus() {
 					var params = new URLSearchParams(window.location.search);
-					if (params.has("auth")) {
+					if (params.get("auth") === "success") {
+						// Set a JS-readable marker cookie (the real auth cookie is HttpOnly)
+						document.cookie = "sarvaseo_logged_in=1; Path=/; SameSite=Lax; Max-Age=604800";
 						// Clean the URL
 						var url = new URL(window.location.href);
 						url.searchParams.delete("auth");
