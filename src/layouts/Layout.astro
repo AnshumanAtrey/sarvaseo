@@ -5,11 +5,17 @@ import "../style/global.css";
 export interface Props {
 	title?: string;
 	description?: string;
+	canonicalUrl?: string;
+	ogType?: string;
+	ogImage?: string;
 }
 
 const {
 	title = "Free SEO Checklist 2026 - Complete AI SEO Guide & Tools | SarvaSEO",
 	description = "Free comprehensive SEO checklist with 55+ actionable steps. Master SEO rankings with AI tools, keyword research, technical SEO, and proven strategies. Get instant search engine indexing with IndexNow integration!",
+	canonicalUrl = "https://sarvaseo.atrey.dev/",
+	ogType = "website",
+	ogImage = "https://sarvaseo.atrey.dev/sarvaseo-og.png",
 } = Astro.props;
 ---
 
@@ -52,7 +58,7 @@ const {
 		/>
 		<meta name="msvalidate.01" content="09DA5E83D4AFE5E809803FF539F307C2" />
 		<meta name="IndexNow" content="0177dad855f84bc3900bf90ee223115c" />
-		<link rel="canonical" href="https://sarvaseo.atrey.dev/" />
+		<link rel="canonical" href={canonicalUrl} />
 
 		<!-- Additional SEO Meta Tags for Better Indexing -->
 		<meta name="rating" content="general" />
@@ -65,11 +71,11 @@ const {
 		<!-- Open Graph Meta Tags -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://sarvaseo.atrey.dev/" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:site_name" content="SarvaSEO" />
 		<meta property="og:locale" content="en_US" />
-		<meta property="og:image" content="https://sarvaseo.atrey.dev/sarvaseo-og.png" />
+		<meta property="og:image" content={ogImage} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:type" content="image/png" />
@@ -79,7 +85,7 @@ const {
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="https://sarvaseo.atrey.dev/sarvaseo-og.png" />
+		<meta name="twitter:image" content={ogImage} />
 		<meta name="twitter:image:alt" content="SarvaSEO - Free SEO Checklist 2026 with AI Tools and Proven Strategies" />
 
 		<!-- SEO-Critical Meta Tags -->
@@ -516,7 +522,7 @@ const {
 		<!-- Valid Security Meta Tags -->
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.clarity.ms https://www.linkedin.com; img-src 'self' data: https://www.google-analytics.com https://*.clarity.ms https://*.bing.com;"
+			content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.clarity.ms https://www.linkedin.com; img-src 'self' data: https://www.google-analytics.com https://*.clarity.ms https://*.bing.com https://res.cloudinary.com;"
 		/>
 		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 		<meta
