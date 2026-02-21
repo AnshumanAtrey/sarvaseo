@@ -10,7 +10,7 @@ const { module } = Astro.props;
 
 <div class="group hover:opacity-95 transition-opacity duration-200" data-module={module.id} data-module-id={module.id}>
   <div
-    class={`w-full py-6 cursor-pointer transition-all duration-200 ease-out focus:outline-none focus-visible:bg-stone-50 focus-visible:rounded-lg ${module.isPaid ? "opacity-75" : ""}`}
+    class={`w-full py-3 sm:py-6 cursor-pointer transition-all duration-200 ease-out focus:outline-none focus-visible:bg-stone-50 focus-visible:rounded-lg ${module.isPaid ? "opacity-75" : ""}`}
     data-module-toggle={module.id}
     role="button"
     tabindex="0"
@@ -59,26 +59,42 @@ const { module } = Astro.props;
 
   <!-- Module content container -->
   <div class="hidden" data-module-content={module.id}>
-    <div class="ml-9 mt-4 space-y-3" data-steps-container={module.id}>
+    <div class="ml-[11px] space-y-1" data-steps-container={module.id}>
       {module.steps.map((step) => (
-        <div class={`border-l-2 border-gray-200 pl-4 py-2 ${step.isPaid ? "premium-locked" : ""}`} data-step={step.id} data-premium={step.isPaid ? "true" : undefined}>
-          <!-- Step Header - always visible (no accordion) -->
-          <div class={`p-2 rounded ${step.isPaid ? "bg-stone-50" : ""}`}>
-            <div class="flex-1">
-              <div class="flex items-center mb-1">
-                <h3 class={`text-sm font-medium ${step.isPaid ? "text-gray-500" : "text-gray-900"}`}>
-                  {step.title}
-                </h3>
-                {step.isPaid && (
-                  <span class="ml-2 text-xs text-gold-600" data-lock-badge>
-                    🔒 Login to unlock
-                  </span>
-                )}
-              </div>
-              <div class={`text-xs ${step.isPaid ? "text-gray-500" : "text-gray-700"}`} set:html={step.action}></div>
+        <div class={`border-l-2 border-gray-200 pl-6 py-1.5 ${step.isPaid ? "premium-locked" : ""}`} data-step={step.id} data-premium={step.isPaid ? "true" : undefined}>
+          <!-- Step toggle (title + chevron) -->
+          <div
+            class={`flex items-center justify-between cursor-pointer px-1 py-1 rounded hover:bg-stone-50 transition-colors ${step.isPaid ? "bg-stone-50" : ""}`}
+            data-step-toggle={`${module.id}-${step.id}`}
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+          >
+            <h3 class={`text-sm font-normal ${step.isPaid ? "text-gray-500" : "text-gray-900"}`}>
+              {step.title}
+            </h3>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+              {step.isPaid && (
+                <span class="text-xs text-gold-600" data-lock-badge>
+                  🔒 Login to unlock
+                </span>
+              )}
+              <svg
+                class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                data-step-chevron={`${module.id}-${step.id}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+              </svg>
             </div>
+          </div>
 
-            <!-- Tip callout (always visible) -->
+          <!-- Step content (hidden by default) -->
+          <div class="hidden px-1 pt-3 pb-2" data-step-content={`${module.id}-${step.id}`}>
+            <div class={`text-xs ${step.isPaid ? "text-gray-500" : "text-gray-700"}`} set:html={step.action}></div>
+
             {!step.isPaid && (
               <div class="mt-2">
                 <div class="callout-tip text-xs text-gray-700">
@@ -87,7 +103,6 @@ const { module } = Astro.props;
               </div>
             )}
 
-            <!-- Example callout (always visible) -->
             {!step.isPaid && step.example && (
               <div class="mt-2">
                 <div class="callout-example text-xs text-gray-700">

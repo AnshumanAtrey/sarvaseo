@@ -236,6 +236,24 @@ const {
 				window.loadedModules.add(moduleId);
 			};
 
+			// Step toggle function
+			window.toggleStep = function (stepId) {
+				var toggle = document.querySelector('[data-step-toggle="' + stepId + '"]');
+				var content = document.querySelector('[data-step-content="' + stepId + '"]');
+				var chevron = document.querySelector('[data-step-chevron="' + stepId + '"]');
+				if (!toggle || !content || !chevron) return;
+				var expanded = toggle.getAttribute("aria-expanded") === "true";
+				if (expanded) {
+					content.classList.add("hidden");
+					chevron.style.transform = "";
+					toggle.setAttribute("aria-expanded", "false");
+				} else {
+					content.classList.remove("hidden");
+					chevron.style.transform = "rotate(180deg)";
+					toggle.setAttribute("aria-expanded", "true");
+				}
+			};
+
 			// Event delegation
 			document.addEventListener("click", function (e) {
 				// Handle premium step clicks (redirect to login)
@@ -247,7 +265,17 @@ const {
 					return;
 				}
 
-				// Handle module toggles (only if not inside inline content)
+				// Handle step toggles (check before module toggles)
+				var stepToggle = e.target.closest("[data-step-toggle]");
+				if (stepToggle) {
+					e.preventDefault();
+					e.stopPropagation();
+					var stepId = stepToggle.getAttribute("data-step-toggle");
+					toggleStep(stepId);
+					return;
+				}
+
+				// Handle module toggles
 				const moduleToggle = e.target.closest("[data-module-toggle]");
 				if (moduleToggle) {
 					e.preventDefault();
@@ -262,6 +290,15 @@ const {
 			// Keyboard support
 			document.addEventListener("keydown", function (e) {
 				if (e.key === "Enter" || e.key === " ") {
+					// Handle step keyboard navigation
+					var stepToggle = e.target.closest("[data-step-toggle]");
+					if (stepToggle) {
+						e.preventDefault();
+						var stepId = stepToggle.getAttribute("data-step-toggle");
+						toggleStep(stepId);
+						return;
+					}
+
 					// Handle module keyboard navigation
 					const moduleToggle = e.target.closest(
 						"[data-module-toggle]",
@@ -466,7 +503,12 @@ const {
 			.main-content {
 				max-width: 768px;
 				margin: 0 auto;
-				padding: 0 4rem;
+				padding: 0 1rem;
+			}
+			@media (min-width: 640px) {
+				.main-content {
+					padding: 0 4rem;
+				}
 			}
 
 			/* Optimize LCP element */
