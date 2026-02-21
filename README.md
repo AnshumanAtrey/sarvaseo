@@ -101,23 +101,245 @@ The built files will be in the `dist/` directory.
 
 ```
 src/
-├── components/          # Reusable Astro components
-│   ├── Hero.astro      # Hero section
-│   ├── Module.astro    # SEO module container
-│   ├── Step.astro      # Individual SEO step
-│   └── Footer.astro    # Footer component
+├── components/
+│   ├── Hero.astro           # Hero section
+│   ├── Module.astro         # SEO module container
+│   ├── Step.astro           # Individual SEO step
+│   └── Footer.astro         # Footer with Blog + Privacy links
 ├── data/
-│   └── seoModules.ts   # SEO content and data structure
+│   └── seoModules.ts        # SEO content and data structure
 ├── layouts/
-│   └── Layout.astro    # Base HTML layout
+│   └── Layout.astro         # Base HTML layout (canonical, OG, CSP)
+├── lib/
+│   ├── firebase.ts          # Firebase singleton (Firestore client)
+│   ├── blog.ts              # BlogPost interface + Firestore queries
+│   └── cloudinary.ts        # Cloudinary SDK + image upload
 ├── pages/
-│   └── index.astro     # Main application page
+│   ├── index.astro          # Main SEO checklist page
+│   ├── privacy-policy.astro # Privacy policy (static)
+│   ├── api/blogs/
+│   │   └── ingest.ts        # Blog API (POST/PATCH/DELETE)
+│   └── blog/
+│       ├── index.astro      # Blog listing page (SSR)
+│       └── [slug].astro     # Blog post page (SSR)
 ├── scripts/
-│   ├── performance.js     # Performance optimizations
-│   └── errorHandler.js    # Error handling
+│   ├── performance.js
+│   └── errorHandler.js
 └── styles/
-    └── global.css      # Global styles and Tailwind imports
+    └── global.css
 ```
+
+## Blog System
+
+The blog is backed by **Firebase Firestore** with **Cloudinary** for image hosting. Blog pages are server-side rendered (SSR) via Vercel serverless functions.
+
+### Environment Variables
+
+Add these to your `.env` (local) and Vercel dashboard (production):
+
+```env
+# Blog
+BLOG_INGEST_PASSWORD=your-secret-password
+
+# Firebase
+FIREBASE_API_KEY=...
+FIREBASE_AUTH_DOMAIN=...
+FIREBASE_PROJECT_ID=...
+FIREBASE_STORAGE_BUCKET=...
+FIREBASE_MESSAGING_SENDER_ID=...
+FIREBASE_APP_ID=...
+FIREBASE_MEASUREMENT_ID=...
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+```
+
+### Blog Ingest API
+
+All endpoints require `Authorization: Bearer <BLOG_INGEST_PASSWORD>` header.
+
+**Base URL:** `/api/blogs/ingest`
+
+---
+
+#### POST — Create or full-update a blog post
+
+Creates a new post or overwrites an existing one. Requires `slug`, `title`, and `content`.
+
+```bash
+curl -X POST https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d '{
+    "slug": "my-blog-post",
+    "title": "My Blog Post Title",
+    "content": "<p>HTML content here...</p>",
+    "excerpt": "Short description for listings and meta tags",
+    "author": "SarvaSEO",
+    "tags": ["seo", "guide"],
+    "published": true
+  }'
+```
+
+**With a cover image** (base64 data URI or public URL):
+
+```bash
+curl -X POST https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d @payload.json
+```
+
+Where `payload.json` contains:
+```json
+{
+  "slug": "my-blog-post",
+  "title": "My Blog Post Title",
+  "content": "<p>HTML content...</p>",
+  "published": true,
+  "image": "data:image/jpeg;base64,/9j/4AAQ..."
+}
+```
+
+The `image` field accepts:
+- Base64 data URI: `data:image/jpeg;base64,...`
+- Public URL: `https://example.com/image.jpg`
+
+Images are uploaded to Cloudinary at `sarvaseo/<slug>` and the resulting CDN URL is stored as `coverImage`.
+
+> **Tip:** For large images, write the JSON to a file and use `curl -d @file.json` to avoid shell argument length limits.
+
+---
+
+#### PATCH — Partial update (add image, change fields)
+
+Updates only the fields you send. Only `slug` is required.
+
+**Add/replace a cover image without resending content:**
+```bash
+# Using a public image URL
+curl -X PATCH https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d '{
+    "slug": "my-blog-post",
+    "image": "https://example.com/new-thumbnail.jpg"
+  }'
+```
+
+**Unpublish a post:**
+```bash
+curl -X PATCH https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d '{"slug": "my-blog-post", "published": false}'
+```
+
+**Update title and tags only:**
+```bash
+curl -X PATCH https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d '{
+    "slug": "my-blog-post",
+    "title": "Updated Title",
+    "tags": ["seo", "updated"]
+  }'
+```
+
+Response includes which fields were updated:
+```json
+{"success": true, "slug": "my-blog-post", "updated": ["title", "tags"]}
+```
+
+---
+
+#### DELETE — Remove a blog post
+
+Permanently deletes a post from Firestore. Does **not** delete the Cloudinary image.
+
+```bash
+curl -X DELETE https://sarvaseo.atrey.dev/api/blogs/ingest \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-password" \
+  -d '{"slug": "my-blog-post"}'
+```
+
+Returns `404` if the post doesn't exist:
+```json
+{"error": "Post not found", "slug": "my-blog-post"}
+```
+
+---
+
+### Firestore Structure
+
+Posts are stored at: `sarvaseo/config/blogs/{slug}`
+
+Each document contains:
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | string | Post title |
+| `content` | string | Full HTML content |
+| `excerpt` | string | Short description for listings/SEO |
+| `author` | string | Author name |
+| `tags` | string[] | Category tags |
+| `published` | boolean | Whether the post is publicly visible |
+| `coverImage` | string? | Cloudinary CDN URL |
+| `createdAt` | Timestamp | Auto-set on first write |
+| `updatedAt` | Timestamp | Auto-set on every write |
+
+**Firestore Rules** required (set in Firebase Console):
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /sarvaseo/config/blogs/{slug} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
+```
+
+**Composite Index** required for the blog listing query:
+- Collection: `sarvaseo/config/blogs`
+- Fields: `published` ASC, `createdAt` DESC
+
+### Troubleshooting
+
+**Images not showing after upload:**
+1. Check CSP — `img-src` in `Layout.astro` must include `https://res.cloudinary.com`
+2. Hard reload the page (`Cmd+Shift+R` / `Ctrl+Shift+R`) to bypass browser cache
+3. Verify the Cloudinary URL is accessible: `curl -I <cloudinary-url>`
+4. Check Cloudinary credentials in `.env` — all three (`CLOUD_NAME`, `API_KEY`, `API_SECRET`) are required
+
+**Image too large for curl command line:**
+- Shell argument limits can be exceeded with base64 images. Write the JSON payload to a file first:
+  ```bash
+  # Write payload to file
+  echo '{"slug":"...","image":"data:image/jpeg;base64,..."}' > /tmp/payload.json
+  # Use file reference
+  curl -X PATCH .../api/blogs/ingest -d @/tmp/payload.json
+  ```
+
+**Blog listing shows empty state:**
+1. Firestore rules must allow reads on `sarvaseo/config/blogs/{slug}`
+2. The composite index (published + createdAt) must be created in Firebase Console
+3. After creating the index, restart the dev server — the Firestore client caches index availability
+
+**401 Unauthorized:**
+- Ensure `BLOG_INGEST_PASSWORD` matches between your `.env` (or Vercel env vars) and the `Authorization: Bearer` header
+
+**Firestore permission denied:**
+- Set Firestore security rules in Firebase Console (see rules above)
+- Rules changes take a few seconds to propagate
+
+**Post not appearing after publish:**
+- Check `"published": true` was sent in the request (defaults to `false`)
+- Use PATCH to flip: `{"slug": "...", "published": true}`
 
 ## Features in Detail
 

@@ -2,7 +2,7 @@
 export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
-import { getPostBySlug } from "../../lib/blog";
+import { getPostBySlug, getAllPublishedPosts } from "../../lib/blog";
 
 const { slug } = Astro.params;
 const post = await getPostBySlug(slug!);
@@ -13,8 +13,22 @@ if (!post) {
 
 const publishedDate = post.createdAt?.toDate?.()?.toISOString?.() || new Date().toISOString();
 const updatedDate = post.updatedAt?.toDate?.()?.toISOString?.() || publishedDate;
+const wasUpdated = publishedDate !== updatedDate;
 
 const postOgImage = post.coverImage || "https://sarvaseo.atrey.dev/sarvaseo-og.png";
+
+// Reading time estimate (~200 words per minute)
+const wordCount = post.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(wordCount / 200));
+
+// Related posts (other published posts, excluding current)
+const allPosts = await getAllPublishedPosts();
+const relatedPosts = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+
+// Descriptive alt text for cover image
+const coverAlt = post.excerpt
+  ? `${post.title} — ${post.excerpt.substring(0, 100)}`
+  : `Blog post cover image for ${post.title} by ${post.author}`;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -22,6 +36,7 @@ const jsonLd = {
   headline: post.title,
   description: post.excerpt,
   image: postOgImage,
+  wordCount: wordCount,
   author: {
     "@type": "Person",
     name: post.author,
@@ -55,7 +70,7 @@ const jsonLd = {
         {post.coverImage && (
           <img
             src={post.coverImage}
-            alt={post.title}
+            alt={coverAlt}
             class="w-full rounded-lg mb-6"
             width="1200"
             height="630"
@@ -65,7 +80,7 @@ const jsonLd = {
         <h1 class="font-instrument text-3xl sm:text-4xl text-gray-900 font-light mb-4">
           {post.title}
         </h1>
-        <div class="flex items-center gap-3 text-xs text-gray-400">
+        <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400">
           <span>{post.author}</span>
           <span>&middot;</span>
           <time datetime={publishedDate}>
@@ -75,6 +90,20 @@ const jsonLd = {
               day: "numeric",
             }) || ""}
           </time>
+          {wasUpdated && (
+            <>
+              <span>&middot;</span>
+              <span class="text-amber-700">
+                Updated {post.updatedAt?.toDate?.().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }) || ""}
+              </span>
+            </>
+          )}
+          <span>&middot;</span>
+          <span>{readingTime} min read</span>
           {post.tags?.length > 0 && (
             <>
               <span>&middot;</span>
@@ -87,7 +116,37 @@ const jsonLd = {
       <div class="blog-content" set:html={post.content} />
     </article>
 
-    <div class="mt-12 pt-6 border-t border-gray-100">
+    {relatedPosts.length > 0 && (
+      <nav class="mt-14 pt-8 border-t border-gray-100" aria-label="Related posts">
+        <h2 class="font-instrument text-xl text-gray-900 mb-5">Keep Reading</h2>
+        <div class="grid gap-4">
+          {relatedPosts.map((related) => (
+            <a href={`/blog/${related.slug}`} class="group flex gap-4 items-start p-3 -mx-3 rounded-lg hover:bg-stone-50 transition-colors">
+              {related.coverImage && (
+                <img
+                  src={related.coverImage}
+                  alt={`Read: ${related.title}`}
+                  class="w-20 h-14 object-cover rounded flex-shrink-0"
+                  width="80"
+                  height="56"
+                  loading="lazy"
+                />
+              )}
+              <div>
+                <h3 class="text-sm font-medium text-gray-900 group-hover:text-amber-800 transition-colors leading-snug">
+                  {related.title}
+                </h3>
+                {related.excerpt && (
+                  <p class="text-xs text-gray-400 mt-1 line-clamp-1">{related.excerpt}</p>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </nav>
+    )}
+
+    <div class="mt-8 pt-6 border-t border-gray-100">
       <a href="/blog" class="text-sm text-gray-500 hover:text-gray-700 underline">&larr; Back to Blog</a>
     </div>
   </main>

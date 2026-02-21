@@ -4,6 +4,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  deleteDoc,
   query,
   where,
   orderBy,
@@ -63,4 +64,12 @@ export async function upsertPost(
   }
 
   await setDoc(docRef, writeData, { merge: true });
+}
+
+export async function deletePost(slug: string): Promise<boolean> {
+  const docRef = doc(blogsCollection, slug);
+  const snapshot = await getDoc(docRef);
+  if (!snapshot.exists()) return false;
+  await deleteDoc(docRef);
+  return true;
 }
